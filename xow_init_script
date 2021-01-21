@@ -15,7 +15,7 @@ XOW_BINARY=/media/fat/linux/xow
 XOW_COMPATIBILITY=0			# 0 = normal mode, 1 = compatibility mode
 XOW_CONSOLE_LOG=0			# 0 = disabled,    1 = console logging
 
-[ -f /bin/xow ] || exit 0
+[ -f $XOW_BINARY ] || exit 0
 
 is_running() {
 	[ ! -z "$(pidof xow)" ]
