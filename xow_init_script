@@ -1,0 +1,97 @@
+#!/bin/sh
+########################################################################
+#
+# Description : xow user mode driver service
+#
+# Authors     : John K. <jklimek@email.com>
+#
+# Version     : 1.0
+#
+# Notes       : https://github.com/medusalix/xow
+#
+########################################################################
+
+XOW_BINARY=/media/fat/linux/xow
+XOW_COMPATIBILITY=0			# 0 = normal mode, 1 = compatibility mode
+XOW_CONSOLE_LOG=0			# 0 = disabled,    1 = console logging
+
+[ -f /bin/xow ] || exit 0
+
+is_running() {
+	[ ! -z "$(pidof xow)" ]
+}
+
+status() {
+	if is_running ; then
+                echo "xow server is running."
+	else
+                echo "xow server is NOT running."
+        fi
+}
+
+start() {
+	if is_running ; then
+		echo "xow service is already running."
+		exit 0
+	fi
+
+	printf "Starting xow service: "
+
+	if [ "$XOW_CONSOLE_LOG" = "1" ]; then
+		$XOW_BINARY &
+	else
+		$XOW_BINARY >/dev/null 2>&1 &
+	fi
+
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+stop() {
+        if ! is_running ; then
+                echo "xow service is not running."
+                exit 0
+        fi
+
+	printf "Shutting down xow service: "
+	kill -9 `pidof xow`
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+restart() {
+	stop
+	start
+}
+
+pair() {
+        if ! is_running ; then
+                echo "ERROR: xow service is not running."
+                exit 0
+        fi
+
+        printf "Enabling pairing mode: "
+        kill -s USR1 `pidof xow`
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
+	;;
+  restart)
+  	restart
+	;;
+  status)
+        status
+        ;;
+  pair)
+  	pair
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart|status|pair}"
+	exit 1
+esac
+
+exit $?
