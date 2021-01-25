@@ -19,9 +19,11 @@
 # https://github.com/MiSTer-devel/Scripts_MiSTer
 
 # Version 1.0 - 2021-01-21 - First commit
+# Version 1.1 - 2021-01-25 - Added xow binary and xow_init_script download
 
 LINUX_PATH="/media/fat/linux"
 XOW_INIT_SCRIPT="$LINUX_PATH/xow_init_script"
+MISTER_XOW_URL="https://github.com/MiSTer-devel/xow_MiSTer"
 
 if [ "$(uname -n)" != "MiSTer" ]
 then
@@ -30,11 +32,33 @@ then
 	exit 1
 fi
 
-if [ ! -f "${LINUX_PATH}/xow" ]
+#if [ ! -f "${LINUX_PATH}/xow" ]
+#then
+#	echo "xow binary not found."
+#	echo "Please run updater script."
+#	exit 1
+#fi
+if ! which "xow" &>/dev/null
 then
-	echo "xow binary not found."
-	echo "Please run updater script."
-	exit 1
+	echo "Downloading xow binary and xow_init_script"
+	curl -L "$MISTER_XOW_URL/blob/main/xow" -o "${LINUX_PATH}/xow"
+	case $? in
+		0)
+			curl -L "$MISTER_XOW_URL/blob/main/xow_init_script" -o "${LINUX_PATH}/xow_init_script"
+			;;
+		60)
+			if ! curl -kL "$MISTER_XOW_URL/blob/main/xow?raw=true" -o "${LINUX_PATH}/xow"
+			then
+				echo "No Internet connection"
+				exit 2
+			fi
+			curl -kL "$MISTER_XOW_URL/blob/main/xow_init_script?raw=true" -o "${LINUX_PATH}/xow_init_script"
+			;;
+		*)
+			echo "No Internet connection"
+			exit 2
+			;;
+	esac
 fi
 
 mount | grep "on / .*[(,]ro[,$]" -q && RO_ROOT="true"
