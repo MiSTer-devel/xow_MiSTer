@@ -20,15 +20,6 @@
 
 # Version 1.0 - 2021-01-21 - First commit
 
-
-
-if [ "$(uname -n)" != "MiSTer" ]
-then
-	echo "This script must be run"
-	echo "on a MiSTer system."
-	exit 1
-fi
-
 /etc/init.d/S40xow stop /dev/null > /dev/null 2>&1
 mount | grep -q "on / .*[(,]ro[,$]" && RO_ROOT="true"
 [ "$RO_ROOT" == "true" ] && mount / -o remount,rw
