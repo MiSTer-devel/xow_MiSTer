@@ -19,6 +19,7 @@
 # https://github.com/MiSTer-devel/Scripts_MiSTer
 
 # Version 1.0 - 2021-01-21 - First commit
+# Version 1.2 - 2021-02-26 - Removed uname validation
 
 /etc/init.d/S40xow stop /dev/null > /dev/null 2>&1
 mount | grep -q "on / .*[(,]ro[,$]" && RO_ROOT="true"

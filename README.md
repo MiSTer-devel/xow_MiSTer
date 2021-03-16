@@ -4,7 +4,7 @@ Linux driver for the Xbox One wireless dongle compiled for MiSTer.
 This is binary release of the xow driver created by medusalix (https://github.com/medusalix/xow).
 
 # Installation (automatic/update script)
-This script will be included in the official MiSTer update script after testing is complete.
+This script will be included in the official MiSTer update script soon.
 
 # Installation (manual)
 Copy the following files to the linux directory on your SD card:
@@ -15,8 +15,6 @@ Copy these files to the Scripts directory on your SD card:
 * xow_on.sh
 * xow_off.sh
 * xow_pairing.sh
-
-NOTE: This driver requires an updated Linux kernel to work properly with older Xbox Wireless adapters.  This update will automatically be included in the next MiSTer Linux kernel release, but for now you can download the included zImage_dtb and replace the existing one.  (SD card/linux)
 
 # Instructions
 On and off scripts are self explantory, but the xow_pairing.sh script allows the Xbox dongle to enter pairing mode so you don't need to press the physical button on the dongle.
