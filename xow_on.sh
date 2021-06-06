@@ -24,23 +24,23 @@
 
 LINUX_PATH="/media/fat/linux"
 XOW_INIT_SCRIPT="$LINUX_PATH/xow_init_script"
-MISTER_XOW_URL="https://github.com/MiSTer-devel/xow_MiSTer"
+MISTER_XOW_URL="https://raw.githubusercontent.com/MiSTer-devel/xow_MiSTer"
 
 if [ ! -f "${LINUX_PATH}/xow" ]
 then
 	echo "Downloading xow binary and xow_init_script"
-	curl -L "$MISTER_XOW_URL/blob/main/xow" -o "${LINUX_PATH}/xow"
+	curl -L "$MISTER_XOW_URL/main/xow" -o "${LINUX_PATH}/xow"
 	case $? in
 		0)
-			curl -L "$MISTER_XOW_URL/blob/main/xow_init_script" -o "${LINUX_PATH}/xow_init_script"
+			curl -L "$MISTER_XOW_URL/main/xow_init_script" -o "${LINUX_PATH}/xow_init_script"
 			;;
 		60)
-			if ! curl -kL "$MISTER_XOW_URL/blob/main/xow?raw=true" -o "${LINUX_PATH}/xow"
+			if ! curl -kL "$MISTER_XOW_URL/main/xow?raw=true" -o "${LINUX_PATH}/xow"
 			then
 				echo "No Internet connection"
 				exit 2
 			fi
-			curl -kL "$MISTER_XOW_URL/blob/main/xow_init_script?raw=true" -o "${LINUX_PATH}/xow_init_script"
+			curl -kL "$MISTER_XOW_URL/main/xow_init_script?raw=true" -o "${LINUX_PATH}/xow_init_script"
 			;;
 		*)
 			echo "No Internet connection"
