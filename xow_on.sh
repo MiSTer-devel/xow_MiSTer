@@ -35,12 +35,12 @@ then
 			curl -L "$MISTER_XOW_URL/main/xow_init_script" -o "${LINUX_PATH}/xow_init_script"
 			;;
 		60)
-			if ! curl -kL "$MISTER_XOW_URL/main/xow?raw=true" -o "${LINUX_PATH}/xow"
+			if ! curl -kL "$MISTER_XOW_URL/main/xow" -o "${LINUX_PATH}/xow"
 			then
 				echo "No Internet connection"
 				exit 2
 			fi
-			curl -kL "$MISTER_XOW_URL/main/xow_init_script?raw=true" -o "${LINUX_PATH}/xow_init_script"
+			curl -kL "$MISTER_XOW_URL/main/xow_init_script" -o "${LINUX_PATH}/xow_init_script"
 			;;
 		*)
 			echo "No Internet connection"
